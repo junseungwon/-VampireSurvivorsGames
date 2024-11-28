@@ -12,14 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Skill Data
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillCodeName: 1
-  skillName: SliceAttack
+  skillCodeName: 0
+  skillName: 
   skillRank: 0
-  skillSprtie: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  skillSp:
-  - skillCoefficient: 1
-    skillCoolTime: 1
-  - skillCoefficient: 2
-    skillCoolTime: 0.5
-  - skillCoefficient: 3
-    skillCoolTime: 0.2
+  skillSprtie: {fileID: 0}
+  skillSp: []
