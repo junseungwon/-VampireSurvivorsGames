@@ -18,5 +18,9 @@ MonoBehaviour:
   rank: 0
   skillSprtie: {fileID: 0}
   rankDB:
-  - skillCoefficient: 0
-    skillCoolTime: 0
+  - skillCoefficient: 1
+    skillCoolTime: 1
+  - skillCoefficient: 2
+    skillCoolTime: 1
+  - skillCoefficient: 3
+    skillCoolTime: 1

@@ -36,6 +36,10 @@ public class SkillData : ScriptableObject
     public int PlusRank()
     {
         rank++;
+        if(rank >= 3)
+        {
+            rank = 3;
+        }
         return rank;
     }
     public void ResetData()

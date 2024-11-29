@@ -11,10 +11,10 @@ public class Barrier : MonoBehaviour, SkillInterface
     {
         Debug.Log("플러스");
 
+        //베리어 추가로 활성화
+        transform.GetChild(skillDB.Rank-1).gameObject.SetActive(true);
     }
-    private void Awake()
-    {
-    }
+
     //활성화
     private void OnEnable()
     {
@@ -32,6 +32,8 @@ public class Barrier : MonoBehaviour, SkillInterface
 
     private IEnumerator CorutinePlay()
     {
+        //첫 번째 베리어 활성화
+        transform.GetChild(0).gameObject.SetActive(true);
         while (true)
         {
             transform.Rotate(0, 0, 1);
@@ -42,8 +44,17 @@ public class Barrier : MonoBehaviour, SkillInterface
     {
         //충돌을 안하게 layer로 처리
         //몬스터는 데미지를 입는다.
-        Debug.Log("몬스터는 데미지를 입었습니다.");
+       // Debug.Log("몬스터는 데미지를 입었습니다.");
 
     }
 
+    public void SkillReset()
+    {
+        //자식 베리어들을 모두 비활성화
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        skillDB.ResetData();
+    }
 }

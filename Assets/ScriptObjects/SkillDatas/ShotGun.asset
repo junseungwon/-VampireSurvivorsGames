@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20da4e7b767738746b2d27faca48aee7, type: 3}
-  m_Name: Health
+  m_Name: ShotGun
   m_EditorClassIdentifier: 
-  skillCodeName: 0
-  skillName: 
-  skillRank: 0
+  codeName: 0
+  skillname: 
+  obj: {fileID: 8099649336958900123, guid: e59c4372bf8945e4997021e820bbecac, type: 3}
+  rank: 0
   skillSprtie: {fileID: 0}
-  skill:
-  - skillCoefficient: 0
-    skillCoolTime: 0
+  rankDB:
+  - skillCoefficient: 1
+    skillCoolTime: 1
+  - skillCoefficient: 2
+    skillCoolTime: 1
+  - skillCoefficient: 3
+    skillCoolTime: 1

@@ -114,7 +114,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!114 &-7818351496304735694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: 3f8abec1a802e7c4c960d01b370e26d4, type: 2}
+  attackCool: 0
+  speed: 0.1
 --- !u!1 &2947595187556401952
 GameObject:
   m_ObjectHideFlags: 0
