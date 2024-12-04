@@ -28,32 +28,21 @@ public class AgentS : Agent
         
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(target.localPosition);
-        sensor.AddObservation(transform.localPosition);
-
-        //sensor.AddObservation(rb.velocity.x);
-       // sensor.AddObservation(rb.velocity.z);
+       // sensor.AddObservation(target.localPosition);
+       //ensor.AddObservation(transform.localPosition);
     }
     
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = actions.ContinuousActions[0];
-        controlSignal.z = actions.ContinuousActions[1];
-
-        rb.AddForce(controlSignal * 50);
-
-        float distance =  Vector3.Distance(transform.localPosition, target.localPosition);
-
+        Vector3 velocity = new Vector3(actions.ContinuousActions[0], 0, actions.ContinuousActions[1]);
+        rb.AddForce(velocity, ForceMode.VelocityChange);
+        // 마이너스 페널티를 적용
         AddReward(-0.01f);
-        if (distance < 1.4f)
-        {
-           // SetReward(1.0f);
-            //EndEpisode();
-        }
+
         if (transform.localPosition.y < 0)
         {
+            AddReward(-1f);
             EndEpisode();
         }
     }
@@ -66,6 +55,8 @@ public class AgentS : Agent
             Debug.Log("충돌");
         }
     }
+
+   
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         

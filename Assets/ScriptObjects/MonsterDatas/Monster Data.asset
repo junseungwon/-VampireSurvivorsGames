@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c11b48df43ede94ebe7eddd91b2181c, type: 3}
   m_Name: Monster Data
   m_EditorClassIdentifier: 
-  monsterCodeName: 0
-  monsterName: 
-  monsterHp: 0
-  damage: 0
+  monsterCodeName: 1
+  monsterName: Zombi
+  monsterHp: 3
+  damage: 1
   moveSpeed: 0.2

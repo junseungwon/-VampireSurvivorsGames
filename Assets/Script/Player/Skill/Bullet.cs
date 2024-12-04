@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float damage = 0f;
+    public float damage = 0f;
     private Transform parento = null;
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("몬스터 적중");
             transform.parent = parento;
             transform.localPosition = Vector3.zero;
-            collision.gameObject.SetActive(false);
+            collision.gameObject.GetComponent<Monster>().HitDamage(damage);
             this.gameObject.SetActive(false);
         }
     }

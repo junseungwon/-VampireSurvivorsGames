@@ -1,6 +1,8 @@
+using Unity.MLAgents;
+using Unity.MLAgents.Actuators;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Agent
 {
     [SerializeField]
     private GameObject player = null;
@@ -21,20 +23,20 @@ public class Player : MonoBehaviour
     //플레이어 vector값
     private Vector3 pos = Vector3.zero;
 
-
     [SerializeField]
     private PlayerSkill skill = null;
+
+    [SerializeField]
+    private GameManager gameManager = null;
+
+    private Rigidbody2D rb = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.player = this;
-        
-        //기본 공격
-        skill.AddSkill((int)SkillType.Slice);
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         PlayerMove();
@@ -48,31 +50,28 @@ public class Player : MonoBehaviour
         {
             //박스 비활성화 후에 박스 오픈
             collision.gameObject.SetActive(false);
+
             OpenItemBox();
+
+            //박스를 먹으면 보상추가
+            AddReward(1);
         }
     }
 
     //플레이어 움직임 제어
 
-    private void PlayerMove()
-    {
-        LeftRight = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        upDown = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-        pos.x += LeftRight;
-        pos.y += upDown;
-        player.transform.position = pos;
-    }
-
     private void PlayerDead()
     {
-        ResetInform();
+        //죽으면 보상 -1
+        AddReward(-1);
+        Debug.Log("죽음 재시작");
+        EndEpisode();
     }
     //아이템 오픈을 실행함
     //랜덤 아이템을 획득함
     private void OpenItemBox()
     {
         int randomNum = Random.Range(0, 3);
-        Debug.Log($"박스를 획득하셨습니다. {randomNum}");
         skill.AddSkill(randomNum);
     }
 
@@ -81,9 +80,53 @@ public class Player : MonoBehaviour
     {
         hp = 3;
         speed = 5f;
-        player.transform.position = Vector3.zero;
+        player.transform.localPosition = Vector3.zero;
         pos = Vector3.zero;
+
+        //스킬들 리셋
         skill.SkillsReset();
+
+        //몬스터랑 박스도 리셋
+        gameManager.ResetSetting();
+    }
+
+    //에피소드 시작
+    public override void OnEpisodeBegin()
+    {
+        //정보들 초기화
+        ResetInform();
+        //기본 공격
+        skill.AddSkill((int)SkillType.Slice);
+    }
+
+    //입력받을 경우
+    public override void OnActionReceived(ActionBuffers actions)
+    {
+        upDown = actions.ContinuousActions[1];
+        LeftRight = actions.ContinuousActions[0];
+    }
+
+    //움직임
+    private void PlayerMove()
+    {
+        pos.x += LeftRight * Time.deltaTime * speed;
+        pos.y += upDown * Time.deltaTime * speed;
+
+        if (pos.x > 20) pos.x = 20;
+        if (pos.x < -20) pos.x = -20;
+        if (pos.y > 20) pos.y = 20;
+        if (pos.y < -20) pos.y = -20;
+        player.transform.localPosition = pos;
+    }
+
+    //직접 입력
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continueAction = actionsOut.ContinuousActions;
+        continueAction[0] = Input.GetAxis("Horizontal");
+        continueAction[1] = Input.GetAxis("Vertical");
+        upDown = continueAction[1];
+        LeftRight = continueAction[0];
     }
 }
 public enum LayerName

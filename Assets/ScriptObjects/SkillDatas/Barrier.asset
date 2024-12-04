@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20da4e7b767738746b2d27faca48aee7, type: 3}
   m_Name: Barrier
   m_EditorClassIdentifier: 
-  codeName: 0
-  skillname: 
+  codeName: 1
+  skillname: Barrier
   obj: {fileID: 1892895522415664314, guid: d5d7c4a555d36ab4a9254e2923689731, type: 3}
-  rank: 0
   skillSprtie: {fileID: 0}
   rankDB:
   - skillCoefficient: 1

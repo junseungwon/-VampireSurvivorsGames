@@ -6,9 +6,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField]
     private SkillData[] skillDB = null;
     [SerializeField]
-    private GameObject[] skills = null;
-
-
+    private SkillBase[] skills = null;
 
     //스킬 추가
     public void AddSkill(int num)
@@ -41,28 +39,36 @@ public class PlayerSkill : MonoBehaviour
     public void AddObject(SkillType type)
     {
         //스킬이 0렙이 아니라면 랭크만 추가한다.
-        if (skillDB[(int)type].Rank != 0)
+        if (skills[(int)type].Rank > 1)
         {
-            skillDB[(int)type].PlusRank();
-            skills[(int)type].GetComponent<SkillInterface>().PlusRank();
+            //skillDB[(int)type].GetComponent<SkillInterface>().plus
+            //skillDB[(int)type].PlusRank();
+
+            skills[(int)type].PlusRankValue();
+            skills[(int)type].PlusRank();
+            Debug.Log(skills[(int)type].Rank + "랭크를 올리셨습니다.");
             return;
         }
 
         //스킬을 활성화 해준다.
         skills[(int)type].gameObject.SetActive(true);
-        skillDB[(int)type].PlusRank();
+        skills[(int)type].enabled = true;
+        skills[(int)type].PlusRankValue();
+        Debug.Log(skills[(int)type].Rank + "랭크를 올리셨습니다.");
+        
+        //skillDB[(int)type].PlusRank();
     }
 
     //피가 회복되고 최대 생명력이 계수만큼 늘어난다.
     public void PlusHp()
     {
-        GameManager.instance.player.Hp = skillDB[(int)SkillType.HpUp].RankDB[skillDB[(int)SkillType.HpUp].Rank-1].skillCoefficient;
+       // GameManager.instance.player.Hp = skillDB[(int)SkillType.HpUp].RankDB[skillDB[(int)SkillType.HpUp].Rank-1].skillCoefficient;
     }
 
     //랭크 계수만큼 플레이 스피드가 상승한다.
     public void PlusSpeed()
     {
-        GameManager.instance.player.Speed = skillDB[(int)SkillType.SpeedUp].RankDB[skillDB[(int)SkillType.SpeedUp].Rank-1].skillCoefficient;
+        //GameManager.instance.player.Speed = skillDB[(int)SkillType.SpeedUp].RankDB[skillDB[(int)SkillType.SpeedUp].Rank-1].skillCoefficient;
     }
 
     public void SkillsReset()
@@ -70,8 +76,9 @@ public class PlayerSkill : MonoBehaviour
         //각자 스킬들을 리셋해주고 각자 생성된 스킬들을 모두 파괴한다.
         for (int i = 0; i < skills.Length; i++)
         {
-            skills[i].GetComponent<SkillInterface>().SkillReset();
-            Destroy(skills[i]);
+            skills[i].SkillReset();
+            skills[i].enabled = false;
+            skills[i].gameObject.SetActive(false);
         }
     }
 }
@@ -82,11 +89,29 @@ public enum SkillType
     Barrier, ShotGun, Slice, HpUp, SpeedUp
 }
 
-public interface SkillInterface
-{
-    //랭크 업이 되었으 때 설정
-    public void PlusRank();
 
-    public void SkillReset();
+public class SkillBase :MonoBehaviour
+{
+    public int rank = 0;
+    public int Rank { get { return rank; } set { if (rank+1 >= 3) rank = 3; rank = value; } }
+
+    //랭크 업이 되었으 때 설정
+    public virtual void PlusRank() { }
+
+    public void PlusRankValue()
+    {
+        if (rank + 1 > 3)
+        {
+            rank = 3;
+        }
+        else
+        {
+            rank += 1;
+        }
+    }
+
+    public void ResetRank() { rank = 0; }
+
+    public virtual void SkillReset() { }
 }
 

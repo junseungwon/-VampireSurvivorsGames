@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20da4e7b767738746b2d27faca48aee7, type: 3}
   m_Name: Slice
   m_EditorClassIdentifier: 
-  codeName: 0
-  skillname: 
+  codeName: 3
+  skillname: Slice
   obj: {fileID: 4325010444839139931, guid: 6f0b9db1a62a8bc49bb135759d353c48, type: 3}
-  rank: 0
   skillSprtie: {fileID: 0}
   rankDB:
   - skillCoefficient: 1

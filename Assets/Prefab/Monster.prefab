@@ -128,8 +128,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: 3f8abec1a802e7c4c960d01b370e26d4, type: 2}
+  player: {fileID: 0}
+  gameManager: {fileID: 0}
   attackCool: 0
   speed: 0.1
+  hp: 3
 --- !u!1 &2947595187556401952
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,5 +285,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
