@@ -28,11 +28,11 @@ public class AgentS : Agent
         
     public override void CollectObservations(VectorSensor sensor)
     {
-        //sensor.AddObservation(target.localPosition);
+        sensor.AddObservation(target.localPosition);
         sensor.AddObservation(transform.localPosition);
 
         //sensor.AddObservation(rb.velocity.x);
-        //sensor.AddObservation(rb.velocity.z);
+       // sensor.AddObservation(rb.velocity.z);
     }
     
 
@@ -42,10 +42,11 @@ public class AgentS : Agent
         controlSignal.x = actions.ContinuousActions[0];
         controlSignal.z = actions.ContinuousActions[1];
 
-        rb.AddForce(controlSignal * 10);
+        rb.AddForce(controlSignal * 50);
 
         float distance =  Vector3.Distance(transform.localPosition, target.localPosition);
 
+        AddReward(-0.01f);
         if (distance < 1.4f)
         {
            // SetReward(1.0f);
@@ -67,10 +68,10 @@ public class AgentS : Agent
     }
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        /*
+        
         var continueAction = actionsOut.ContinuousActions;
         continueAction[0] = Input.GetAxis("Horizontal");
         continueAction[1] = Input.GetAxis("Vertical");
-        */
+        
     }
 }
